@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signup | ResumeAI</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/signup.css">
+</head>
+<body>
+<div class="signup-container">
+<div class="signup-box">
+<h2>Create Account</h2>
+<form id="signupForm">
+<input type="text" placeholder="Full Name" required>
+<input type="email" placeholder="Email Address" required>
+<input type="password" placeholder="Password" required>
+<input type="password" placeholder="Confirm Password" required>
+<button type="submit">Sign Up</button>
+</form>
+<p>Already have an account? <a href="login.html">Login</a></p>
+</div>
+</div>
+<script>
+document.getElementById("signupForm").addEventListener("submit", async function(e){
+e.preventDefault();
+window.location.href = "login.html";
+const name = document.querySelector("input[placeholder='Full Name']").value;
+const email = document.querySelector("input[placeholder='Email Address']").value;
+const password = document.querySelector("input[placeholder='Password']").value;
+const res = await fetch("http://localhost:5000/api/signup",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+name,
+email,
+password
+})
+});
+const data = await res.json();
+alert(data.message);
+});
+</script>
+</body>
+</html>

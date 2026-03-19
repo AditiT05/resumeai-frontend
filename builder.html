@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder | ResumeAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/builder.css">
+</head>
+
+<body>
+
+    <div class="builder-navbar">
+        <h2>ResumeAI Builder</h2>
+        <div class="nav-actions">
+            <button onclick="location.reload()">Reset</button>
+        </div>
+    </div>
+
+    <div class="builder-container">
+        <div class="form-container">
+
+            <div class="form-section active">
+                <h3>Personal Information</h3>
+                <input type="text" id="name" placeholder="Full Name">
+                <input type="text" id="jobTitleInput" placeholder="Professional Title">
+                <input type="email" id="email" placeholder="Email">
+                <input type="text" id="phone" placeholder="Phone">
+                <input type="text" id="location" placeholder="Location">
+                <input type="text" id="profilePic" placeholder="Profile Picture URL">
+                <button onclick="nextStep()">Next</button>
+            </div>
+
+            <div class="form-section">
+                <h3>Profile Summary</h3>
+                <textarea id="summaryInput" placeholder="Professional Summary"></textarea>
+                <div style="display:flex; justify-content:space-between;">
+                    <button onclick="prevStep()">Back</button>
+                    <button onclick="nextStep()">Next</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Education</h3>
+                <input type="text" id="school" placeholder="Education 1 (e.g. University Name)">
+                <input type="text" id="schoolDate" placeholder="Dates (e.g. 2018 - 2022)">
+                <input type="text" id="college" placeholder="Education 2 (e.g. High School)">
+                <input type="text" id="collegeDate" placeholder="Dates">
+                <div style="display:flex; justify-content:space-between;">
+                    <button onclick="prevStep()">Back</button>
+                    <button onclick="nextStep()">Next</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Skills</h3>
+                <textarea id="skillsInput" placeholder="Skills (comma separated)"></textarea>
+                <div style="display:flex; justify-content:space-between;">
+                    <button onclick="prevStep()">Back</button>
+                    <button onclick="nextStep()">Next</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Experience</h3>
+                <input type="text" id="exp1Title" placeholder="Job 1 Title">
+                <input type="text" id="exp1Date" placeholder="Dates">
+                <textarea id="exp1Desc" placeholder="Job 1 Description"></textarea>
+                <input type="text" id="exp2Title" placeholder="Job 2 Title">
+                <input type="text" id="exp2Date" placeholder="Dates">
+                <textarea id="exp2Desc" placeholder="Job 2 Description"></textarea>
+                <div style="display:flex; justify-content:space-between;">
+                    <button onclick="prevStep()">Back</button>
+                    <button onclick="nextStep()">Next</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Additional Info</h3>
+                <textarea id="additionalInfo" placeholder="Languages, Certs, etc."></textarea>
+                <div style="display:flex; justify-content:space-between;">
+                    <button onclick="prevStep()">Back</button>
+                    <button class="nav-btn-match" onclick="submitResume()">Generate</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const sections = document.querySelectorAll(".form-section");
+
+        function showStep(index) {
+            sections.forEach((sec, i) => {
+                sec.style.display = (i === index) ? "block" : "none";
+                if (i === index) sec.classList.add("active");
+            });
+        }
+
+        function nextStep() { if (currentStep < sections.length - 1) { currentStep++; showStep(currentStep); } }
+        function prevStep() { if (currentStep > 0) { currentStep--; showStep(currentStep); } }
+
+        function submitResume() {
+            const d = (id) => document.getElementById(id).value;
+
+            const data = {
+                name: d("name").toUpperCase(),
+                title: d("jobTitleInput").toUpperCase(),
+                email: d("email"),
+                phone: d("phone"),
+                loc: d("location"),
+                pic: d("profilePic") || "https://via.placeholder.com/100",
+                summary: d("summaryInput"),
+                skills: d("skillsInput"),
+                edu1: d("school"),
+                edu1Date: d("schoolDate"),
+                edu2: d("college"),
+                edu2Date: d("collegeDate"),
+                exp1: d("exp1Title"),
+                exp1Desc: d("exp1Desc"),
+                exp2: d("exp2Title"),
+                exp2Desc: d("exp2Desc"),
+                extra: d("additionalInfo")
+            };
+
+            let newWindow = window.open("", "_blank");
+            newWindow.document.write(`
+                <html>
+                <head>
+                    <title>Resume - ${data.name}</title>
+                    <style>
+                        body { font-family: 'Helvetica', Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+                        .resume-container { width: 800px; background: white; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1); position: relative; }
+                        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #2b6cb0; padding-bottom: 10px; }
+                        .header-left h1 { color: #2b6cb0; margin: 0; }
+                        .profile-img { width: 100px; height: 100px; border: 1px solid #ccc; object-fit: cover; }
+                        .section-title { color: #2b6cb0; font-weight: bold; border-bottom: 1px solid #2b6cb0; margin-top: 20px; text-transform: uppercase; font-size: 14px; padding-bottom: 2px; }
+                        .actions { width: 800px; margin-bottom: 15px; text-align: right; display: flex; justify-content: flex-end; gap: 10px; }
+                        .btn { padding: 10px 20px; border: none; cursor: pointer; color: white; font-weight: bold; border-radius: 4px; transition: 0.3s; font-size: 14px; }
+                        .btn-export { background: #10b981; } /* Emerald Green */
+                        .btn-ai { background: linear-gradient(90deg, #38bdf8, #6366f1); }
+                        .btn:hover { opacity: 0.8; }
+                        
+                        #aiPanel { 
+                            display: none; 
+                            width: 800px; 
+                            background: #f0f9ff; 
+                            border: 2px solid #38bdf8; 
+                            border-radius: 8px; 
+                            margin-bottom: 20px; 
+                            padding: 20px; 
+                            box-sizing: border-box;
+                            animation: slideDown 0.4s ease;
+                        }
+                        #aiPanel h2 { color: #0369a1; font-size: 18px; margin-top: 0; display: flex; align-items: center; gap: 10px; }
+                        .suggestion-item { background: white; padding: 10px; border-radius: 5px; margin-bottom: 8px; border-left: 4px solid #38bdf8; font-size: 13px; color: #334155; }
+                        .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; font-size: 12px; margin-top: 10px; }
+                        .item-header { display: flex; justify-content: space-between; font-weight: bold; font-size: 13px; margin-top: 10px; }
+                        
+                        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+                        @media print { .actions, #aiPanel, .btn { display: none !important; } .resume-container { box-shadow: none; width: 100%; padding: 0; } body { background: white; padding: 0; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="actions">
+                        <button class="btn btn-ai" onclick="runAI()">✨ Get AI Insights</button>
+                        <button class="btn btn-export" onclick="window.print()">Export</button>
+                    </div>
+
+                    <div id="aiPanel">
+                        <h2>🤖 AI Resume Insights</h2>
+                        <div id="aiContent"></div>
+                        <button class="btn" style="background:#cbd5e1; color:#334; margin-top:10px; padding:5px 15px;" onclick="document.getElementById('aiPanel').style.display='none'">Dismiss</button>
+                    </div>
+
+                    <div class="resume-container">
+                        <div class="header">
+                            <div class="header-left">
+                                <h1>${data.name}</h1>
+                                <h3>${data.title}</h3>
+                                <p>${data.loc} | ${data.phone} | ${data.email}</p>
+                            </div>
+                            <img src="${data.pic}" class="profile-img">
+                        </div>
+
+                        <div class="section-title">Summary</div>
+                        <p style="font-size:12px;">${data.summary}</p>
+
+                        <div class="section-title">Education</div>
+                        <div class="item-header"><span>${data.edu1}</span><span>${data.edu1Date}</span></div>
+                        <div class="item-header"><span>${data.edu2}</span><span>${data.edu2Date}</span></div>
+
+                        <div class="section-title">Experience</div>
+                        <div class="item-header"><span>${data.exp1}</span></div>
+                        <p style="font-size:12px;">${data.exp1Desc}</p>
+                        <div class="item-header"><span>${data.exp2}</span></div>
+                        <p style="font-size:12px;">${data.exp2Desc}</p>
+
+                        <div class="section-title">Technical Skills</div>
+                        <div class="skills-grid">
+                            ${data.skills.split(',').map(s => `<div>• ${s.trim()}</div>`).join('')}
+                        </div>
+
+                        <div class="section-title">Additional Information</div>
+                        <p style="font-size:12px; white-space: pre-line;">${data.extra}</p>
+                    </div>
+
+                    <script>
+                        async function runAI() {
+                            const panel = document.getElementById('aiPanel');
+                            const content = document.getElementById('aiContent');
+                            
+                            const skills = \`${data.skills.replace(/`/g, '\\`')}\`;
+                            const summary = \`${data.summary.replace(/`/g, '\\`')}\`;
+                            const exp = \`${(data.exp1Desc + " " + data.exp2Desc).replace(/`/g, '\\`')}\`;
+
+                            panel.style.display = "block";
+                            content.innerHTML = "<div class='suggestion-item'>🤖 AI is analyzing your profile...</div>";
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                            try {
+                                const response = await fetch('http://localhost:5000/api/ai-suggest', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ skills, summary, experience: exp })
+                                });
+
+                                const result = await response.json();
+
+                                if (result.suggestion) {
+                                    const tips = result.suggestion.split('\\n').filter(t => t.trim() !== "");
+                                    content.innerHTML = tips.map(tip => \`<div class='suggestion-item'>\${tip.replace(/^[*-]/, '').trim()}</div>\`).join('');
+                                } else {
+                                    content.innerHTML = "<div class='suggestion-item'>No suggestions found.</div>";
+                                }
+                            } catch (error) {
+                                content.innerHTML = "<div class='suggestion-item' style='border-left-color: #ef4444;'>❌ AI Server Offline. Check port 5000.</div>";
+                            }
+                        }
+                    <\/script>
+                </body>
+                </html>
+            `);
+            newWindow.document.close();
+        }
+    </script>
+</body>
+</html>

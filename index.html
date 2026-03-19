@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeAI | Build Your Future</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><h2>ResumeAI</h2></div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button onclick="startBuilder()">Get Started</button>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>Build Your Resume <br><span>With AI Intelligence</span></h1>
+        <p>Create professional, job-winning resumes in minutes using smart suggestions and industry-standard templates designed for the modern job market.</p>
+        <div class="hero-btns">
+            <button onclick="startBuilder()">Create My Resume</button>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Powerful Features</h2>
+        <div class="feature-box">
+            <div class="card">
+                <i class="fas fa-robot" style="font-size: 2rem; color: #38bdf8; margin-bottom: 15px;"></i>
+                <h3>AI Suggestions</h3>
+                <p>Improve your content with real-time smart recommendations and power words.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-layer-group" style="font-size: 2rem; color: #38bdf8; margin-bottom: 15px;"></i>
+                <h3>Modern Templates</h3>
+                <p>Choose from clean, ATS-friendly designs that recruiters love.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-file-pdf" style="font-size: 2rem; color: #38bdf8; margin-bottom: 15px;"></i>
+                <h3>Instant Download</h3>
+                <p>Export your high-quality resume as a PDF instantly with one click.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="logo">ResumeAI</h3>
+                <p style="opacity: 0.7; font-size: 14px;">The smartest way to build your professional identity. Empowering developers and students globally.</p>
+            </div>
+
+            <div class="footer-section" id="contact">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-envelope"></i> support@resumeai.com</p>
+                <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                <p><i class="fas fa-location-dot"></i> Mumbai, India</p>
+            </div>
+
+            <div class="footer-section message-box">
+                <h3>Quick Message</h3>
+                <form id="contactForm">
+                    <input type="email" id="userEmail" placeholder="Your Email" required>
+                    <textarea id="userMsg" placeholder="Type your message here..." rows="3" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 ResumeAI | All Rights Reserved</p>
+        </div>
+    </footer>
+    <script>
+        function startBuilder(){
+            window.location.href = "signup.html";
+        }
+
+        // Handle Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('userEmail').value;
+            alert("Thanks for reaching out! We've received your message from: " + email);
+            this.reset();
+        });
+    </script>
+</body>
+</html>

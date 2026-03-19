@@ -1,0 +1,155 @@
+/* --- NAVBAR --- */
+.builder-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #020617;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.builder-navbar h2 {
+    color: #38bdf8;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.nav-actions button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #38bdf8, #6366f1);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.nav-actions button:hover {
+    opacity: 0.9;
+}
+
+/* --- MAIN CONTAINER --- */
+.builder-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px;
+}
+
+/* --- FORM CARD --- */
+.form-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 12px;
+    margin: 20px auto 40px;
+    max-width: 600px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.form-section {
+    display: none;
+    animation: fade 0.4s ease-out;
+}
+
+.form-section.active {
+    display: block;
+}
+
+.form-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #38bdf8;
+    font-size: 1.25rem;
+    border-left: 4px solid #6366f1;
+    padding-left: 15px;
+}
+
+/* --- INPUTS & TEXTAREAS --- */
+.form-container input,
+.form-container textarea {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background: #020617;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-sizing: border-box; 
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+}
+
+.form-container textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* --- BUTTONS --- */
+/* Unified button style for all form buttons */
+.form-section button, 
+.nav-btn-match, 
+.submit-btn, 
+.generate-btn {
+    margin-top: 15px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #38bdf8, #6366f1);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-section button:hover, 
+.nav-btn-match:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* Specific styling for the flex container (Back/Next buttons) */
+.form-section div[style*="display:flex"] {
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.form-section div[style*="display:flex"] button {
+    flex: 0 1 auto; /* Prevents buttons from stretching to full width */
+    min-width: 100px;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fade {
+    from { 
+        opacity: 0; 
+        transform: translateX(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .builder-navbar {
+        padding: 15px 20px;
+    }
+    .form-container {
+        padding: 20px;
+        margin: 10px;
+    }
+}
