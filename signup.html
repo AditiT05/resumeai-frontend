@@ -24,11 +24,10 @@
 <script>
 document.getElementById("signupForm").addEventListener("submit", async function(e){
 e.preventDefault();
-window.location.href = "login.html";
 const name = document.querySelector("input[placeholder='Full Name']").value;
 const email = document.querySelector("input[placeholder='Email Address']").value;
 const password = document.querySelector("input[placeholder='Password']").value;
-const res = await fetch("http://localhost:5000/api/signup",{
+const res = await fetch("https://resumeai-backend-y1kg.onrender.com/api/signup",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -41,6 +40,7 @@ password
 });
 const data = await res.json();
 alert(data.message);
+window.location.href = "login.html";
 });
 </script>
 </body>
